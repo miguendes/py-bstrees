@@ -17,6 +17,7 @@ class BSTNode:
         self.entry = entry
         self.left = EMPTY_NODE
         self.right = EMPTY_NODE
+        self.height = 1
 
     def insert(self, entry):
         if entry > self.entry:
@@ -24,10 +25,15 @@ class BSTNode:
         elif entry < self.entry:
             self.left = self.left.insert(entry)
 
+        self._update_height()
+
         return self
 
     def __bool__(self):
         return True
+
+    def _update_height(self):
+        self.height = 1 + max(self.left.height, self.right.height)
 
 
 class BinarySearchTree:

@@ -33,3 +33,34 @@ def test_insert_duplicated_entry():
     assert tree.root.right.entry == 10
     assert not tree.root.left
     assert tree
+
+
+def test_height():
+    tree = BinarySearchTree()
+    tree.insert(9)
+    root = tree.root
+    assert root.height == 1
+
+    tree.insert(4)
+    root = tree.root
+    assert root.height == 2
+    assert root.left.height == 1
+
+    tree.insert(14)
+    root = tree.root
+    assert root.height == 2
+    assert root.left.height == 1
+    assert root.right.height == 1
+
+    tree.insert(17)
+    root = tree.root
+    assert root.height == 3
+    assert root.left.height == 1
+    assert root.right.height == 2
+    assert root.right.right.height == 1
+
+    tree.insert(7)
+    root = tree.root
+    assert root.height == 3
+    assert root.left.height == 2
+    assert root.left.right.height == 1
