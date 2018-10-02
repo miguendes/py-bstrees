@@ -21,7 +21,7 @@ class BSTNode:
     def insert(self, entry):
         if entry > self.entry:
             self.right = self.right.insert(entry)
-        else:
+        elif entry < self.entry:
             self.left = self.left.insert(entry)
 
         return self
