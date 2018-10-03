@@ -64,3 +64,15 @@ def test_height():
     assert root.height == 3
     assert root.left.height == 2
     assert root.left.right.height == 1
+
+
+def test_length():
+    tree = BinarySearchTree()
+
+    entries = range(150)
+    for entry in entries:
+        tree.insert(entry)
+
+    assert len(tree) == len(entries)
+
+    assert len(BinarySearchTree()) == 0
