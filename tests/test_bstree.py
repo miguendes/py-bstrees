@@ -91,13 +91,12 @@ def test_contains():
 
     """test element must be in tree"""
     entries = list(range(128))
+    random.shuffle(entries)
 
     tree = BinarySearchTree()
 
     for entry in entries:
         tree.insert(entry)
-
-    random.shuffle(entries)
 
     for entry in entries:
         assert entry in tree
