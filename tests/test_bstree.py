@@ -76,3 +76,25 @@ def test_length():
     assert len(tree) == len(entries)
 
     assert len(BinarySearchTree()) == 0
+
+
+def test_contains():
+    """test empty tree should not contain any entry"""
+    assert 10 not in BinarySearchTree()
+
+    """test single element must be in tree"""
+    tree = BinarySearchTree()
+    tree.insert(10)
+
+    assert 10 in tree
+
+    """test element must be in tree"""
+    entries = range(128)
+
+    tree = BinarySearchTree()
+
+    for entry in entries:
+        tree.insert(entry)
+
+    for entry in entries:
+        assert entry in tree

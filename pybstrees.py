@@ -58,3 +58,25 @@ class BinarySearchTree:
     def __len__(self):
         """T.__len__() <==> len(x). Retuns the number of elements in the tree."""
         return len(self.root)
+
+    def _search(self, entry):
+        """Returns node.k if T has a entry k, else raise KeyError"""
+        root = self.root
+
+        while root:
+            if entry > root.entry:
+                root = root.right
+            elif entry < root.entry:
+                root = root.left
+            else:
+                return root
+
+        raise KeyError(f'Entry {entry} not found.')
+
+    def __contains__(self, entry):
+        """k in T -> True if T has a entry k, else False"""
+        try:
+            self._search(entry)
+            return True
+        except KeyError:
+            return False
