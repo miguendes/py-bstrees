@@ -116,3 +116,15 @@ def test_traversal(order, expected):
     tree.insert(30)
 
     assert tuple(tree.traverse(order)) == expected
+
+
+@pytest.mark.parametrize("order,expected", [
+    ('preorder', ()),
+    ('inorder', ()),
+    ('postorder', ()),
+    ('bfs', ()),
+])
+def test_empty_traversal(order, expected):
+    tree = BinarySearchTree()
+
+    assert tuple(tree.traverse(order)) == expected
