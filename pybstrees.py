@@ -49,8 +49,17 @@ class BSTNode:
 
 class BinarySearchTree:
 
-    def __init__(self):
+    def __init__(self, args=None):
+        """Initialize the tree according to the arguments passed. """
         self.root = EMPTY_NODE
+
+        if args is not None:
+            try:
+                for _ in args:
+                    pass
+            except (ValueError, TypeError) as e:
+                raise TypeError(f'{self.__class__.__name__} constructor called with '
+                                f'incompatible data type: {e}')
 
     def insert(self, entry):
         self.root = self.root.insert(entry)

@@ -128,3 +128,10 @@ def test_empty_traversal(order, expected):
     tree = BinarySearchTree()
 
     assert tuple(tree.traverse(order)) == expected
+
+
+def test_constructor_not_properly_called():
+    with pytest.raises(TypeError) as context:
+        BinarySearchTree(4)
+    assert ("BinarySearchTree constructor called with incompatible data type: "
+            "'int' object is not iterable" in str(context.value))
