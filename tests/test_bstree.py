@@ -1,3 +1,5 @@
+import pytest
+
 from pybstrees import BinarySearchTree
 
 
@@ -74,7 +76,6 @@ def test_length():
         tree.insert(entry)
 
     assert len(tree) == len(entries)
-
     assert len(BinarySearchTree()) == 0
 
 
@@ -96,3 +97,22 @@ def test_all_inserted_elements_must_be_in_tree():
 
     for entry in entries:
         assert entry in tree
+
+
+@pytest.mark.parametrize("order,expected", [
+    ('preorder', (20, 10, 25, 23, 29, 30)),
+    ('inorder', (10, 20, 23, 25, 29, 30)),
+    ('postorder', (10, 23, 30, 29, 25, 20)),
+    ('bfs', (20, 10, 25, 23, 29, 30)),
+])
+def test_traversal(order, expected):
+    tree = BinarySearchTree()
+
+    tree.insert(20)
+    tree.insert(10)
+    tree.insert(25)
+    tree.insert(23)
+    tree.insert(29)
+    tree.insert(30)
+
+    assert tuple(tree.traverse(order)) == expected
