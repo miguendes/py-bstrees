@@ -78,18 +78,14 @@ def test_length():
     assert len(BinarySearchTree()) == 0
 
 
-def test_contains():
-    import random
+def test_empty_tree_contains_no_key():
     """test empty tree should not contain any entry"""
     assert 10 not in BinarySearchTree()
 
-    """test single element must be in tree"""
-    tree = BinarySearchTree()
-    tree.insert(10)
 
-    assert 10 in tree
-
+def test_all_inserted_elements_must_be_in_tree():
     """test element must be in tree"""
+    import random
     entries = list(range(128))
     random.shuffle(entries)
 
