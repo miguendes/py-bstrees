@@ -55,8 +55,8 @@ class BinarySearchTree:
 
         if args is not None:
             try:
-                for _ in args:
-                    pass
+                for arg in args:
+                    self.insert(arg)
             except (ValueError, TypeError) as e:
                 raise TypeError(f'{self.__class__.__name__} constructor called with '
                                 f'incompatible data type: {e}')

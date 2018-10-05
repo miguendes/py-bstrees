@@ -135,3 +135,10 @@ def test_constructor_not_properly_called():
         BinarySearchTree(4)
     assert ("BinarySearchTree constructor called with incompatible data type: "
             "'int' object is not iterable" in str(context.value))
+
+
+def test_initialize_tree_from_sequence():
+    entries = [5, 3, 8, 9, 1, 2]
+    tree = BinarySearchTree(entries)
+
+    assert tuple(tree.traverse('bfs')) == (5, 3, 8, 1, 9, 2)
