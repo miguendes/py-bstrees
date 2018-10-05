@@ -46,6 +46,16 @@ class BSTNode:
 
         return max_entry
 
+    def min(self):
+        """Returns the min element in the subtree."""
+        min_entry = self.entry
+        left_node = self.left
+        while left_node:
+            min_entry = left_node.entry
+            left_node = left_node.left
+
+        return min_entry
+
     def __bool__(self):
         return True
 
@@ -165,3 +175,7 @@ class BinarySearchTree:
     def max(self):
         """T.max() -> get the maximum entry of T."""
         return self.root.max()
+
+    def min(self):
+        """T.min() -> get the minimum entry of T."""
+        return self.root.min()

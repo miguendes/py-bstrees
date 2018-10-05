@@ -150,6 +150,12 @@ def test_find_max():
     assert tree.max() == max(entries)
 
 
+def test_find_min():
+    entries = get_random_entries()
+    tree = BinarySearchTree(entries)
+    assert tree.min() == min(entries)
+    
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
