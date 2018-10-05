@@ -36,6 +36,16 @@ class BSTNode:
 
         return self
 
+    def max(self):
+        """Returns the max element in the subtree."""
+        max_entry = self.entry
+        right_node = self.right
+        while right_node:
+            max_entry = right_node.entry
+            right_node = right_node.right
+
+        return max_entry
+
     def __bool__(self):
         return True
 
@@ -151,3 +161,7 @@ class BinarySearchTree:
 
                 q.append(left)
                 q.append(right)
+
+    def max(self):
+        """T.max() -> get the maximum entry of T."""
+        return self.root.max()

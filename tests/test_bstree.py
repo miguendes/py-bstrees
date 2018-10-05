@@ -142,3 +142,20 @@ def test_initialize_tree_from_sequence():
     tree = BinarySearchTree(entries)
 
     assert tuple(tree.traverse('bfs')) == (5, 3, 8, 1, 9, 2)
+
+
+def test_find_max():
+    entries = get_random_entries()
+    tree = BinarySearchTree(entries)
+    assert tree.max() == max(entries)
+
+
+def get_random_entries():
+    from random import randint, shuffle, seed
+    seed(7477)
+    a = randint(1, 500)
+    b = randint(1, 500)
+    lower, upper = min(a, b), max(a, b)
+    entries = list(range(lower, upper + 1))
+    shuffle(entries)
+    return entries
