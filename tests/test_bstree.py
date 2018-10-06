@@ -154,7 +154,17 @@ def test_find_min():
     entries = get_random_entries()
     tree = BinarySearchTree(entries)
     assert tree.min() == min(entries)
-    
+
+
+@pytest.mark.parametrize("entries,expected", [
+    ([2, 1, 4, 3, 5], '(2 (1 () ()) (4 (3 () ()) (5 () ())))'),
+    ([1, 2, 3, 4, 5], '(1 () (2 () (3 () (4 () (5 () ())))))'),
+    ([], '()')
+])
+def test_str_repr(entries, expected):
+    tree = BinarySearchTree(entries)
+    assert str(tree) == expected
+
 
 def get_random_entries():
     from random import randint, shuffle, seed

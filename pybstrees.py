@@ -8,6 +8,9 @@ class EmptyBSTNode:
     def insert(self, entry):
         return BSTNode(entry)
 
+    def __str__(self):
+        return ""
+
     def __bool__(self):
         return False
 
@@ -55,6 +58,9 @@ class BSTNode:
             left_node = left_node.left
 
         return min_entry
+
+    def __str__(self):
+        return f"{self.entry} ({str(self.left)}) ({str(self.right)})"
 
     def __bool__(self):
         return True
@@ -171,6 +177,9 @@ class BinarySearchTree:
 
                 q.append(left)
                 q.append(right)
+
+    def __str__(self):
+        return f"({str(self.root)})"
 
     def max(self):
         """T.max() -> get the maximum entry of T."""
