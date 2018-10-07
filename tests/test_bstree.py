@@ -189,13 +189,13 @@ def test_delete_leaf_node():
 
 @pytest.mark.parametrize("entries,entry_to_be_deleted", [
     ([1, 2, 3], 10),
-    (None, '10')
+    (None, 10)
 ])
 def test_delete_not_existent_entry(entries, entry_to_be_deleted):
     with pytest.raises(KeyError) as context:
         tree = BinarySearchTree(entries)
         tree.delete(entry_to_be_deleted)
-        assert f"KeyError: {entry_to_be_deleted}" in str(context.value)
+    assert f"KeyError: {entry_to_be_deleted}" in str(context.value)
 
 
 def test_delete_entries_in_a_row():

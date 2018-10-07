@@ -10,7 +10,7 @@ class EmptyBSTNode:
 
     def delete(self, entry):
         """Cannot delete a entry from a EmptyNode"""
-        raise KeyError(entry)
+        raise KeyError(f"KeyError: {entry}")
 
     def __str__(self):
         return ""
