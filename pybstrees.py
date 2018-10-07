@@ -48,6 +48,10 @@ class EmptyBSTNode:
         """Checks if a EmptyNode is equal to other"""
         return isinstance(other, self.__class__)
 
+    def clear(self):
+        """Clears the whole subtree"""
+        return EMPTY_NODE
+
 
 EMPTY_NODE = EmptyBSTNode()
 
@@ -127,6 +131,15 @@ class BSTNode:
     def __eq__(self, other) -> bool:
         """Checks if two nodes are equal."""
         return self.entry == other.entry and self.left == other.left and self.right == other.right
+
+    def clear(self):
+        """Clears the whole subtree"""
+        if self.is_leaf():
+            return EMPTY_NODE
+        self.left = self.left.clear()
+        self.right = self.right.clear()
+
+        return EMPTY_NODE
 
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
@@ -263,3 +276,7 @@ class BinarySearchTree:
     def delete(self, entry):
         """T.remove(entry) remove item <entry> from tree."""
         self.root = self.root.delete(entry)
+
+    def clear(self):
+        """T.clear() -> Removes all entries of T leaving it empty."""
+        self.root = self.root.clear()

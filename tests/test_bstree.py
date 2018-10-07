@@ -274,6 +274,13 @@ def test_equals():
     assert tree1 != BinarySearchTree()
 
 
+def test_clear():
+    tree = BinarySearchTree([1, 2, 3, 4, 5])
+    tree.clear()
+
+    assert not tree
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
