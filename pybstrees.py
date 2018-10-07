@@ -141,6 +141,20 @@ class BSTNode:
 
         return EMPTY_NODE
 
+    def search(self, entry):
+        """Returns node.k if T has a entry k, else raise KeyError"""
+        root = self
+
+        while root:
+            if entry > root.entry:
+                root = root.right
+            elif entry < root.entry:
+                root = root.left
+            else:
+                return root
+
+        raise KeyError(f'Entry {entry} not found.')
+
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
 
@@ -151,13 +165,7 @@ class BinarySearchTree:
         """Initialize the tree according to the arguments passed. """
         self.root = EMPTY_NODE
 
-        if args is not None:
-            try:
-                for arg in args:
-                    self.insert(arg)
-            except (ValueError, TypeError) as e:
-                raise TypeError(f'{self.__class__.__name__} constructor called with '
-                                f'incompatible data type: {e}')
+        self._init_tree(args)
 
     def insert(self, entry):
         self.root = self.root.insert(entry)
@@ -250,6 +258,21 @@ class BinarySearchTree:
                 q.append(left)
                 q.append(right)
 
+    def _init_tree(self, args):
+        """Initialize the tree according to the arguments passed. """
+        self.root = EMPTY_NODE
+
+        if args is not None:
+            if isinstance(args, self.__class__):
+                args = args.traverse('bfs')
+
+            try:
+                for entry in args:
+                    self.insert(entry)
+            except (ValueError, TypeError) as e:
+                raise TypeError(f'{self.__class__.__name__} constructor called with '
+                                f'incompatible data type: {e}')
+
     def __str__(self):
         return f"({str(self.root)})"
 
@@ -280,3 +303,7 @@ class BinarySearchTree:
     def clear(self):
         """T.clear() -> Removes all entries of T leaving it empty."""
         self.root = self.root.clear()
+
+    def search(self, entry):
+        """Returns k if T has a entry k, else raise KeyError"""
+        return self.root.search(entry).entry

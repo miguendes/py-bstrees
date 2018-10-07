@@ -20,9 +20,29 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+import functools
+
 import pytest
 
 from pybstrees import BinarySearchTree
+
+
+@functools.total_ordering
+class Entry:
+    def __init__(self, a: int, b: str):
+        self.a = a
+        self.b = b
+
+    def __lt__(self, other):
+        if self.a == other.a:
+            return self.b < other.b
+        return self.a < other.a
+
+    def __eq__(self, other):
+        return self.a == other.a and self.b == other.b
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.a}, {self.b})"
 
 
 def test_empty_tree():
@@ -279,6 +299,29 @@ def test_clear():
     tree.clear()
 
     assert not tree
+
+
+def test_search():
+    tree = BinarySearchTree([1, 2, 3, 4, 5])
+    entry = tree.search(4)
+
+    assert 4 == entry
+
+
+def test_search_complex_data_type():
+    tree = BinarySearchTree([Entry(1, 'a'),
+                             Entry(4, 'b'),
+                             Entry(3, 'c'),
+                             Entry(3, 'd'), ])
+    entry = tree.search(Entry(3, 'd'))
+
+    Entry(3, 'd') == entry
+
+    entry = Entry(3113, 'd')
+    with pytest.raises(KeyError) as context:
+        tree.search(entry)
+
+    assert f"Entry {entry} not found." in str(context.value)
 
 
 def test_build_tree_from_other():
