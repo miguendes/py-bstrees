@@ -166,6 +166,74 @@ def test_str_repr(entries, expected):
     assert str(tree) == expected
 
 
+def test_delete_single_element():
+    tree = BinarySearchTree([1])
+
+    tree.delete(1)
+
+    assert 1 not in tree
+    assert not tree
+    assert len(tree) == 0
+
+
+def test_delete_leaf_node():
+    tree = BinarySearchTree([1, 2])
+
+    tree.delete(2)
+
+    assert 1 in tree
+    assert 2 not in tree
+    assert tree
+    assert len(tree) == 1
+
+
+@pytest.mark.parametrize("entries,entry_to_be_deleted", [
+    ([1, 2, 3], 10),
+    (None, '10')
+])
+def test_delete_not_existent_entry(entries, entry_to_be_deleted):
+    with pytest.raises(KeyError) as context:
+        tree = BinarySearchTree(entries)
+        tree.delete(entry_to_be_deleted)
+        assert f"KeyError: {entry_to_be_deleted}" in str(context.value)
+
+
+def test_delete_entries_in_a_row():
+    entries = [20, 10, 5, 7, 40, 30, 50]
+    tree = BinarySearchTree(entries)
+    assert str(tree) == '(20 (10 (5 () (7 () ())) ()) (40 (30 () ()) (50 () ())))'
+
+    tree.delete(10)
+    assert 10 not in tree
+    assert str(tree) == '(20 (7 (5 () ()) ()) (40 (30 () ()) (50 () ())))'
+
+    tree.delete(5)
+    assert 5 not in tree
+    assert str(tree) == '(20 (7 () ()) (40 (30 () ()) (50 () ())))'
+
+    tree.delete(7)
+    assert 7 not in tree
+    assert str(tree) == '(20 () (40 (30 () ()) (50 () ())))'
+
+    tree.delete(20)
+    assert 20 not in tree
+    assert str(tree) == '(40 (30 () ()) (50 () ()))'
+
+    tree.delete(40)
+    assert 40 not in tree
+    assert str(tree) == '(30 () (50 () ()))'
+
+    tree.delete(30)
+    assert 30 not in tree
+    assert str(tree) == '(50 () ())'
+
+    tree.delete(50)
+    assert 50 not in tree
+    assert str(tree) == '()'
+
+    assert not tree
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)

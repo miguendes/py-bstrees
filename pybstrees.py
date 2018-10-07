@@ -8,6 +8,10 @@ class EmptyBSTNode:
     def insert(self, entry):
         return BSTNode(entry)
 
+    def delete(self, entry):
+        """Cannot delete a entry from a EmptyNode"""
+        raise KeyError(entry)
+
     def __str__(self):
         return ""
 
@@ -38,6 +42,31 @@ class BSTNode:
         self._update_height()
 
         return self
+
+    def delete(self, entry):
+        """Deletes a entry from subtree."""
+        if entry > self.entry:
+            self.right = self.right.delete(entry)
+        elif entry < self.entry:
+            self.left = self.left.delete(entry)
+        else:
+            if self.is_leaf():
+                return EMPTY_NODE
+
+            if self.left:
+                new_entry = self.left.max()
+                self.entry = new_entry
+                self.left = self.left.delete(new_entry)
+            else:
+                return self.right
+
+        self._update_height()
+
+        return self
+
+    def is_leaf(self):
+        """Checks if the node is a leaf node, i. e, if its siblings are empty."""
+        return not (bool(self.left) or bool(self.right))
 
     def max(self):
         """Returns the max element in the subtree."""
@@ -188,3 +217,7 @@ class BinarySearchTree:
     def min(self):
         """T.min() -> get the minimum entry of T."""
         return self.root.min()
+
+    def delete(self, entry):
+        """T.remove(entry) remove item <entry> from tree."""
+        self.root = self.root.delete(entry)
