@@ -256,6 +256,24 @@ def test_delete_entries_in_a_row():
     assert not tree
 
 
+def test_equals():
+    tree1 = BinarySearchTree([2, 4, 1, 5, 3])
+    tree2 = BinarySearchTree([2, 1, 4, 3, 5])
+    tree3 = BinarySearchTree([1, 2, 3, 4, 5, 6])
+
+    assert tree1 == tree2
+    assert tree1 is not tree2
+
+    assert tree1 != tree3
+    assert tree1 is not tree3
+    assert tree2 != tree3
+    assert tree2 is not tree3
+
+    assert tree1 != int(9)
+
+    assert tree1 != BinarySearchTree()
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)

@@ -44,6 +44,10 @@ class EmptyBSTNode:
         """The lenght of a empty node is always 0."""
         return 0
 
+    def __eq__(self, other):
+        """Checks if a EmptyNode is equal to other"""
+        return isinstance(other, self.__class__)
+
 
 EMPTY_NODE = EmptyBSTNode()
 
@@ -119,6 +123,10 @@ class BSTNode:
     def __len__(self) -> int:
         """Return the number of elements in this subtree."""
         return 1 + len(self.left) + len(self.right)
+
+    def __eq__(self, other) -> bool:
+        """Checks if two nodes are equal."""
+        return self.entry == other.entry and self.left == other.left and self.right == other.right
 
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
@@ -231,6 +239,18 @@ class BinarySearchTree:
 
     def __str__(self):
         return f"({str(self.root)})"
+
+    @property
+    def height(self) -> int:
+        """Returns the height of the tree. When the tree is empty its height is zero."""
+        return self.root.height
+
+    def __eq__(self, other) -> bool:
+        """Checks if two trees are equal. """
+        if isinstance(other, self.__class__):
+            if self.height == other.height and len(self) == len(other):
+                return self.root == other.root
+        return False
 
     def max(self):
         """T.max() -> get the maximum entry of T."""
