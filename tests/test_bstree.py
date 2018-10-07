@@ -281,6 +281,13 @@ def test_clear():
     assert not tree
 
 
+def test_build_tree_from_other():
+    original = BinarySearchTree([1, 2, 3, 4, 5])
+    copy = BinarySearchTree(original)
+
+    assert copy == BinarySearchTree([1, 2, 3, 4, 5])
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
