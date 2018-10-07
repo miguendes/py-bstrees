@@ -29,7 +29,7 @@ from pybstrees import BinarySearchTree
 
 @functools.total_ordering
 class Entry:
-    def __init__(self, a: int, b: str):
+    def __init__(self, a, b):
         self.a = a
         self.b = b
 
