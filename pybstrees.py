@@ -55,6 +55,9 @@ class EmptyBSTNode:
     def pred(self, pred, entry):
         raise KeyError(f'Predecessor of {entry} not found.')
 
+    def succ(self, pred, entry):
+        raise KeyError(f'Successor of {entry} not found.')
+
 
 EMPTY_NODE = EmptyBSTNode()
 
@@ -171,6 +174,19 @@ class BSTNode:
 
             raise KeyError(f'Predecessor of {entry} not found.')
 
+    def succ(self, succ, entry):
+        if entry > self.entry:
+            return self.right.succ(succ, entry)
+        elif entry < self.entry:
+            return self.left.succ(self, entry)
+        else:
+            if self.right:
+                return self.right.min()
+            if succ:
+                return succ.entry
+
+            raise KeyError(f'Successor of {entry} not found.')
+
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
 
@@ -217,6 +233,9 @@ class BinarySearchTree:
 
     def pred(self, entry):
         return self.root.pred(EMPTY_NODE, entry)
+
+    def succ(self, entry):
+        return self.root.succ(EMPTY_NODE, entry)
 
     def traverse(self, order='inorder'):
         """Traverse the tree based on a given strategy.

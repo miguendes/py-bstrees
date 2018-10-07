@@ -364,6 +364,27 @@ def test_pred():
     assert "Predecessor of 1000000 not found." in str(context.value)
 
 
+def test_succ():
+    import random
+    random.seed(7477)
+    entries = get_random_entries()
+    tree = BinarySearchTree(entries)
+    rev_entries = sorted(entries, reverse=True)
+
+    succ, prev = None, None
+    for entry in rev_entries:
+        try:
+            succ = tree.succ(entry)
+        except KeyError:
+            assert prev is None
+        assert prev == succ
+        prev = entry
+
+    with pytest.raises(KeyError) as context:
+        tree.succ(1000000)
+    assert "Successor of 1000000 not found." in str(context.value)
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
