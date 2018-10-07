@@ -52,6 +52,9 @@ class EmptyBSTNode:
         """Clears the whole subtree"""
         return EMPTY_NODE
 
+    def pred(self, pred, entry):
+        raise KeyError(f'Predecessor of {entry} not found.')
+
 
 EMPTY_NODE = EmptyBSTNode()
 
@@ -155,6 +158,19 @@ class BSTNode:
 
         raise KeyError(f'Entry {entry} not found.')
 
+    def pred(self, pred, entry):
+        if entry > self.entry:
+            return self.right.pred(self, entry)
+        elif entry < self.entry:
+            return self.left.pred(pred, entry)
+        else:
+            if self.left:
+                return self.left.max()
+            if pred:
+                return pred.entry
+
+            raise KeyError(f'Predecessor of {entry} not found.')
+
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
 
@@ -199,7 +215,10 @@ class BinarySearchTree:
         except KeyError:
             return False
 
-    def traverse(self, order):
+    def pred(self, entry):
+        return self.root.pred(EMPTY_NODE, entry)
+
+    def traverse(self, order='inorder'):
         """Traverse the tree based on a given strategy.
         order : 'preorder' | 'postorder' | 'bfs' | default 'inorder'
             The traversal of the tree.

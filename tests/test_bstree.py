@@ -344,6 +344,26 @@ def test_copy():
     assert tree1 == tree2
 
 
+def test_pred():
+    import random
+    random.seed(7477)
+    entries = get_random_entries()
+    tree = BinarySearchTree(entries)
+
+    pred, prev = None, None
+    for entry in tree.traverse():
+        try:
+            pred = tree.pred(entry)
+        except KeyError:
+            assert prev is None
+        assert prev == pred
+        prev = entry
+
+    with pytest.raises(KeyError) as context:
+        tree.pred(1000000)
+    assert "Predecessor of 1000000 not found." in str(context.value)
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
