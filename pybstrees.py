@@ -288,6 +288,13 @@ class BinarySearchTree:
                 return self.root == other.root
         return False
 
+    def __copy__(self):
+        """Returns a shallow copy of the tree."""
+        cls = self.__class__
+        result = cls.__new__(cls)
+        result.__dict__.update(self.__dict__)
+        return result
+
     def max(self):
         """T.max() -> get the maximum entry of T."""
         return self.root.max()

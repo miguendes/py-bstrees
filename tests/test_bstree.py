@@ -331,6 +331,19 @@ def test_build_tree_from_other():
     assert copy == BinarySearchTree([1, 2, 3, 4, 5])
 
 
+def test_copy():
+    import copy
+    single_entry = Entry(1, ['a'])
+    tree1 = BinarySearchTree([single_entry,
+                              Entry(2, 'b'),
+                              Entry(3, 'c'),
+                              Entry(3, 'd'), ])
+    tree2 = copy.copy(tree1)
+    assert tree1 == tree2
+    single_entry.b = 'a'
+    assert tree1 == tree2
+
+
 def get_random_entries():
     from random import randint, shuffle, seed
     seed(7477)
