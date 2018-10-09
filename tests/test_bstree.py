@@ -24,7 +24,7 @@ import functools
 
 import pytest
 
-from pybstrees import BinarySearchTree
+from pybstree import BinarySearchTree
 
 
 @functools.total_ordering
