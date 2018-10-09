@@ -299,7 +299,7 @@ class TestBinarySearchTree:
                                  Entry(3, 'd'), ])
         entry = tree.search(Entry(3, 'd'))
 
-        Entry(3, 'd') == entry
+        assert Entry(3, 'd') == entry
 
         entry = Entry(3113, 'd')
         with pytest.raises(KeyError) as context:
