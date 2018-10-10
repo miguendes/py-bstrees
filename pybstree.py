@@ -20,6 +20,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+from abc import ABC
 from collections import deque
 
 
@@ -191,8 +192,7 @@ class BSTNode:
         self.height = 1 + max(self.left.height, self.right.height)
 
 
-class BinarySearchTree:
-
+class AbstractBinarySearchTree(ABC):
     def __init__(self, args=None):
         """Initialize the tree according to the arguments passed. """
         self.root = EMPTY_NODE
@@ -352,3 +352,7 @@ class BinarySearchTree:
     def search(self, entry):
         """Returns k if T has a entry k, else raise KeyError"""
         return self.root.search(entry).entry
+
+
+class BinarySearchTree(AbstractBinarySearchTree):
+    pass
