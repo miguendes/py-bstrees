@@ -50,10 +50,6 @@ class TestBinarySearchTree:
         tree = BinarySearchTree()
         assert not tree
 
-    def test_empty_tree(self):
-        tree = BinarySearchTree()
-        assert not tree
-
     def test_insert_on_empty_tree(self):
         tree = BinarySearchTree()
         tree.insert(9)
@@ -110,16 +106,6 @@ class TestBinarySearchTree:
         assert root.height == 3
         assert root.left.height == 2
         assert root.left.right.height == 1
-
-    def test_length(self):
-        tree = BinarySearchTree()
-
-        entries = range(150)
-        for entry in entries:
-            tree.insert(entry)
-
-        assert len(tree) == len(entries)
-        assert len(BinarySearchTree()) == 0
 
     def test_empty_tree_contains_no_key(self):
         """test empty tree should not contain any entry"""
