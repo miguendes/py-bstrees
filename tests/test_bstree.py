@@ -46,12 +46,14 @@ class Entry:
 
 
 class TestBinarySearchTree:
-    def test_empty_tree(self):
-        tree = BinarySearchTree()
+    @pytest.fixture
+    def tree(self):
+        return BinarySearchTree()
+
+    def test_empty_tree(self, tree):
         assert not tree
 
-    def test_insert_on_empty_tree(self):
-        tree = BinarySearchTree()
+    def test_insert_on_empty_tree(self, tree):
         tree.insert(9)
         tree.insert(4)
         tree.insert(14)
@@ -66,8 +68,7 @@ class TestBinarySearchTree:
         assert root.left.right.entry == 7
         assert tree
 
-    def test_insert_duplicated_entry(self):
-        tree = BinarySearchTree()
+    def test_insert_duplicated_entry(self, tree):
         tree.insert(9)
         tree.insert(10)
         tree.insert(9)
@@ -77,8 +78,7 @@ class TestBinarySearchTree:
         assert not tree.root.left
         assert tree
 
-    def test_height(self):
-        tree = BinarySearchTree()
+    def test_height(self, tree):
         tree.insert(9)
         root = tree.root
         assert root.height == 1
@@ -107,17 +107,15 @@ class TestBinarySearchTree:
         assert root.left.height == 2
         assert root.left.right.height == 1
 
-    def test_empty_tree_contains_no_key(self):
+    def test_empty_tree_contains_no_key(self, tree):
         """test empty tree should not contain any entry"""
-        assert 10 not in BinarySearchTree()
+        assert 10 not in tree
 
-    def test_all_inserted_elements_must_be_in_tree(self):
+    def test_all_inserted_elements_must_be_in_tree(self, tree):
         """test element must be in tree"""
         import random
         entries = list(range(128))
         random.shuffle(entries)
-
-        tree = BinarySearchTree()
 
         for entry in entries:
             tree.insert(entry)
@@ -131,9 +129,7 @@ class TestBinarySearchTree:
         ('postorder', (10, 23, 30, 29, 25, 20)),
         ('bfs', (20, 10, 25, 23, 29, 30)),
     ])
-    def test_traversal(self, order, expected):
-        tree = BinarySearchTree()
-
+    def test_traversal(self, order, expected, tree):
         tree.insert(20)
         tree.insert(10)
         tree.insert(25)
@@ -149,9 +145,7 @@ class TestBinarySearchTree:
         ('postorder', ()),
         ('bfs', ()),
     ])
-    def test_empty_traversal(self, order, expected):
-        tree = BinarySearchTree()
-
+    def test_empty_traversal(self, order, expected, tree):
         assert tuple(tree.traverse(order)) == expected
 
     def test_constructor_not_properly_called(self):
@@ -311,10 +305,8 @@ class TestBinarySearchTree:
         single_entry.b = 'a'
         assert tree1 == tree2
 
-    def test_length(self):
-        tree = BinarySearchTree()
-
-        entries = range(150)
+    def test_length(self, tree):
+        entries = sorted(list(range(150)))
         for entry in entries:
             tree.insert(entry)
 
