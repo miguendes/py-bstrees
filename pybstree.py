@@ -29,7 +29,7 @@ class EmptyBSTNode:
         self.height = 0
 
     def insert(self, entry):
-        return BSTNode(entry)
+        return BSTreeNode(entry)
 
     def delete(self, entry):
         """Cannot delete a entry from a EmptyNode"""
@@ -63,7 +63,7 @@ class EmptyBSTNode:
 EMPTY_NODE = EmptyBSTNode()
 
 
-class BSTNode:
+class AbstractBSTreeNode(ABC):
     def __init__(self, entry):
         self.entry = entry
         self.left = EMPTY_NODE
@@ -190,6 +190,10 @@ class BSTNode:
 
     def _update_height(self):
         self.height = 1 + max(self.left.height, self.right.height)
+
+
+class BSTreeNode(AbstractBSTreeNode):
+    pass
 
 
 class AbstractBinarySearchTree(ABC):
