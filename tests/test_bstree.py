@@ -325,6 +325,17 @@ class TestBinarySearchTree:
         single_entry.b = 'a'
         assert tree1 == tree2
 
+    def test_length(self):
+        tree = BinarySearchTree()
+
+        entries = range(150)
+        for entry in entries:
+            tree.insert(entry)
+
+        assert len(tree) == len(entries)
+
+        assert len(BinarySearchTree()) == 0
+
     def test_pred(self):
         import random
         random.seed(7477)
