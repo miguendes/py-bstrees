@@ -196,6 +196,23 @@ class BSTreeNode(AbstractBSTreeNode):
     pass
 
 
+class _EmptyAVLNode:
+    """Internal object, represents an empty tree node using Null Object Pattern."""
+
+    def __init__(self):
+        self.height = 0
+
+
+EMPTY_AVL_NODE = _EmptyAVLNode()
+
+
+class AVLTreeNode(AbstractBSTreeNode):
+    @property
+    def balance_factor(self):
+        """Returns the balance factor of the node."""
+        return super().left.height - super().right.height
+
+
 class AbstractBinarySearchTree(ABC):
     def __init__(self, args=None):
         """Initialize the tree according to the arguments passed. """
@@ -363,4 +380,7 @@ class BinarySearchTree(AbstractBinarySearchTree):
 
 
 class AVLTree(AbstractBinarySearchTree):
-    pass
+    def __init__(self, args=None):
+        """Initialize the tree according to the arguments passed. """
+        super().__init__(args)
+        self.root = EMPTY_AVL_NODE

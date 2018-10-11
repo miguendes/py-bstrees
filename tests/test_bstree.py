@@ -354,13 +354,21 @@ class TestBinarySearchTree:
         assert "Successor of 1000000 not found." in str(context.value)
 
 
-class AvlTreeTest:
+class TestAVLTree:
     @pytest.fixture
     def tree(self):
         return AVLTree()
 
     def test_empty_tree(self, tree):
         assert not tree
+
+    def test_insert_on_empty_tree(self, tree):
+        tree.insert(9)
+
+        assert tree.root.entry == 9
+        assert tree.root.left.balance_factor == 0
+        assert tree.root.right.balance_factor == 0
+        assert tree
 
 
 def get_random_entries():
