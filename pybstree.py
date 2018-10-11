@@ -360,3 +360,7 @@ class AbstractBinarySearchTree(ABC):
 
 class BinarySearchTree(AbstractBinarySearchTree):
     pass
+
+
+class AVLTree(AbstractBinarySearchTree):
+    pass

@@ -24,7 +24,7 @@ import functools
 
 import pytest
 
-from pybstree import BinarySearchTree
+from pybstree import BinarySearchTree, AVLTree
 
 
 @functools.total_ordering
@@ -352,6 +352,15 @@ class TestBinarySearchTree:
         with pytest.raises(KeyError) as context:
             tree.succ(1000000)
         assert "Successor of 1000000 not found." in str(context.value)
+
+
+class AvlTreeTest:
+    @pytest.fixture
+    def tree(self):
+        return AVLTree()
+
+    def test_empty_tree(self, tree):
+        assert not tree
 
 
 def get_random_entries():
