@@ -362,5 +362,143 @@ class BinarySearchTree(AbstractBinarySearchTree):
     pass
 
 
-class AVLTree(AbstractBinarySearchTree):
-    pass
+class _EmptyAVLNode:
+    """Internal object, represents an empty tree node using Null Object Pattern."""
+
+    def __init__(self):
+        self.height = 0
+
+    def insert(self, entry):
+        """Inserting a entry in a EmptyNode means returning a concrete node back."""
+        return _AVLNode(entry)
+
+    @property
+    def balance_factor(self):
+        """The balance factor of a empty node is always 0."""
+        return 0
+
+    def __bool__(self):
+        """Empty node is always Falsy. """
+        return False
+
+    def __len__(self):
+        """The lenght of a empty node is always 0."""
+        return 0
+
+    def __eq__(self, other):
+        """Checks if a EmptyNode is equal to other"""
+        return isinstance(other, self.__class__)
+
+
+EMPTY_AVL_NODE = _EmptyAVLNode()
+
+
+class _AVLNode:
+    """Internal object, represents a tree node."""
+
+    def __init__(self, entry):
+        """Creates a new node."""
+        self.entry = entry
+        self.left = EMPTY_AVL_NODE
+        self.right = EMPTY_AVL_NODE
+        self.height = 1
+
+    def insert(self, entry):
+        """Inserts a entry to the subtree."""
+        if entry > self.entry:
+            self.right = self.right.insert(entry)
+        elif entry < self.entry:
+            self.left = self.left.insert(entry)
+
+        return self._balanced_tree()
+
+    @property
+    def balance_factor(self) -> int:
+        """Returns the balance factor of the node."""
+        return self.left.height - self.right.height
+
+    def _balanced_tree(self):
+        """Returns balanced tree after balance operation."""
+        self._update_height()
+        return self._balance_tree_if_unbalanced()
+
+    def _update_height(self):
+        """Updated the height if tree has been rebalanced."""
+        self.height = 1 + max(self.left.height, self.right.height)
+
+    def _balance_tree_if_unbalanced(self):
+        """Performs the appropriate rotation if the the subtree is unbalanced."""
+        if self.balance_factor == 2 and self.left.balance_factor == -1:
+            return self._rotate_left_right()
+        elif self.balance_factor == -2 and self.right.balance_factor == 1:
+            return self._rotate_right_left()
+        elif self.balance_factor == -2:
+            return self._rotate_left()
+        elif self.balance_factor == 2:
+            return self._rotate_right()
+        else:
+            return self
+
+    def _rotate_left(self):
+        """Performs a left rotation."""
+        right_tree = self.right
+        self.right = right_tree.left
+        right_tree.left = self
+
+        self._update_height()
+        right_tree._update_height()
+
+        return right_tree
+
+    def _rotate_right(self):
+        """Performs a right rotation."""
+        left_tree = self.left
+        self.left = left_tree.right
+        left_tree.right = self
+
+        self._update_height()
+        left_tree._update_height()
+
+        return left_tree
+
+    def _rotate_left_right(self):
+        """Performs a LR rotation"""
+        self.left = self.left._rotate_left()
+        return self._rotate_right()
+
+    def _rotate_right_left(self):
+        """Performs a RL rotation"""
+        self.right = self.right._rotate_right()
+        return self._rotate_left()
+
+
+class AVLTree:
+    """
+    AVLTree implements a balanced binary tree.
+
+    Reference: http://en.wikipedia.org/wiki/AVL_tree
+
+    In computer science, an AVL tree is a self-balancing binary search tree, and
+    it is the first such data structure to be invented. In an AVL tree, the
+    heights of the two child subtrees of any node differ by at most one;
+    therefore, it is also said to be height-balanced. Lookup, insertion, and
+    deletion all take O(log n) time in both the average and worst cases, where n
+    is the number of nodes in the tree prior to the operation. Insertions and
+    deletions may require the tree to be rebalanced by one or more tree rotations.
+    The AVL tree is named after its two inventors, G.M. Adelson-Velskii and E.M.
+    Landis, who published it in their 1962 paper "An algorithm for the
+    organization of information."
+
+    """
+
+    def __init__(self):
+        """Initialize an AVL Tree. """
+        self.root = EMPTY_AVL_NODE
+
+    def insert(self, entry):
+        """T.insert(entry) -- insert elem"""
+        self.root = self.root.insert(entry)
+
+    def __bool__(self):
+        """Returns True if the tree is not empty"""
+        return bool(self.root)
