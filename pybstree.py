@@ -502,3 +502,9 @@ class AVLTree:
     def __bool__(self):
         """Returns True if the tree is not empty"""
         return bool(self.root)
+
+    @property
+    def height(self):
+        """Returns the height of the tree. When the tree is empty its height is zero."""
+        return self.root.height
+

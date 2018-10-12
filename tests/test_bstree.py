@@ -370,6 +370,16 @@ class TestAVLTree:
         assert tree.root.right.balance_factor == 0
         assert tree
 
+    def test_insert_duplicated_entry(self, tree):
+        tree.insert(9)
+        tree.insert(10)
+        tree.insert(9)
+
+        assert tree.root.entry == 9
+        assert tree.root.right.entry == 10
+        assert tree.height == 2
+        assert tree
+
 
 def get_random_entries():
     from random import randint, shuffle, seed
