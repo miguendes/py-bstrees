@@ -380,6 +380,20 @@ class TestAVLTree:
         assert tree.height == 2
         assert tree
 
+    def test_smaller_entry_on_the_left_of_root(self, tree):
+        tree.insert(9)
+        tree.insert(4)
+
+        assert tree.root.entry == 9
+        assert tree.root.left.entry == 4
+
+    def test_greater_entry_on_the_right_of_root(self, tree):
+        tree.insert(9)
+        tree.insert(14)
+
+        assert tree.root.entry == 9
+        assert tree.root.right.entry == 14
+
 
 def get_random_entries():
     from random import randint, shuffle, seed
